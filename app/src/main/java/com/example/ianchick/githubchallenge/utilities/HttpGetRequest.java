@@ -1,6 +1,7 @@
 package com.example.ianchick.githubchallenge.utilities;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +17,8 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
     private static final String REQUEST_METHOD = "GET";
-    private static final int READ_TIMEOUT = 15000; // 15 second timeout
-    private static final int CONNECTION_TIMEOUT = 15000; // 15 second timeout
+    private static final int READ_TIMEOUT = 30000;
+    private static final int CONNECTION_TIMEOUT = 30000;
 
     @Override
     protected String doInBackground(String... strings) {
@@ -32,7 +33,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
             connection.connect();
-            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
+            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
             BufferedReader reader = new BufferedReader(streamReader);
             StringBuilder stringBuilder = new StringBuilder();
@@ -51,7 +52,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             result = null;
         }
-
+        Log.d("findme", "LOOK HERE" + result);
         return result;
     }
 
