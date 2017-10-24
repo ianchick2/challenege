@@ -1,6 +1,7 @@
 package com.example.ianchick.githubchallenge.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.Repository;
+import com.example.ianchick.githubchallenge.activities.PullRequestActivity;
 
 import java.util.ArrayList;
 
@@ -20,8 +22,11 @@ import static com.example.ianchick.githubchallenge.R.id.url;
 
 public class RepositoryListAdapter extends ArrayAdapter implements View.OnClickListener {
 
+    Context context;
+
     public RepositoryListAdapter(ArrayList<Repository> data, Context context) {
         super(context, R.layout.repository_list_row, data);
+        this.context = context;
     }
 
     @Override
@@ -49,5 +54,8 @@ public class RepositoryListAdapter extends ArrayAdapter implements View.OnClickL
         TextView urlTextView = view.findViewById(R.id.url);
         String url = urlTextView.getText().toString();
         String urlPullRequests = url + "/pulls";
+
+        Intent intent = new Intent(context, PullRequestActivity.class);
+        intent.putExtra("PULL_REQUEST_URL", urlPullRequests);
     }
 }

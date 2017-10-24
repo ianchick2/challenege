@@ -69,23 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
     private User parseUser(String username) throws ExecutionException, InterruptedException, JSONException {
         String url = BASE_URL + "users/" + username;
-        JSONObject jsonObject = JsonParser.getJsonObject(getRequest(url));
+        JSONObject jsonObject = JsonParser.getJsonObject(HttpGetRequest.getRequest(url));
         return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
     }
 
     private ArrayList<Repository> parseRepos(String url) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = new ArrayList<>();
-        JSONArray jsonArray = JsonParser.getJsonArray(getRequest(url));
+        JSONArray jsonArray = JsonParser.getJsonArray(HttpGetRequest.getRequest(url));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
             repositories.add(new Repository(jsonObject.getString("full_name"), jsonObject.getString("url")));
         }
         return repositories;
-    }
-
-    private String getRequest(String url) throws ExecutionException, InterruptedException {
-        HttpGetRequest getRequest = new HttpGetRequest();
-        String result = getRequest.execute(url).get();
-        return result;
     }
 }

@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -57,5 +58,11 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result){
         super.onPostExecute(result);
+    }
+
+    public static String getRequest(String url) throws ExecutionException, InterruptedException {
+        HttpGetRequest getRequest = new HttpGetRequest();
+        String result = getRequest.execute(url).get();
+        return result;
     }
 }
