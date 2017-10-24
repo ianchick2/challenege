@@ -20,7 +20,7 @@ import static com.example.ianchick.githubchallenge.R.id.url;
  * Created by ianchick on 10/24/17.
  */
 
-public class RepositoryListAdapter extends ArrayAdapter implements View.OnClickListener {
+public class RepositoryListAdapter extends ArrayAdapter {
 
     Context context;
 
@@ -46,17 +46,19 @@ public class RepositoryListAdapter extends ArrayAdapter implements View.OnClickL
             urlTextView.setText(repository.getUrl());
         }
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView urlTextView = view.findViewById(R.id.url);
+                String url = urlTextView.getText().toString();
+                String urlPullRequests = url + "/pulls";
+
+                Intent intent = new Intent(context, PullRequestActivity.class);
+                intent.putExtra("PULL_REQUEST_URL", urlPullRequests);
+                context.startActivity(intent);
+            }
+        });
+
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        TextView urlTextView = view.findViewById(R.id.url);
-        String url = urlTextView.getText().toString();
-        String urlPullRequests = url + "/pulls";
-
-        Intent intent = new Intent(context, PullRequestActivity.class);
-        intent.putExtra("PULL_REQUEST_URL", urlPullRequests);
-        context.startActivity(intent);
     }
 }
