@@ -1,7 +1,6 @@
 package com.example.ianchick.githubchallenge.utilities;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +51,6 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             result = null;
         }
-        Log.d("findme", "LOOK HERE" + result);
         return result;
     }
 

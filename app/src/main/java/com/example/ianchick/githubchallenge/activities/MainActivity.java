@@ -3,16 +3,17 @@ package com.example.ianchick.githubchallenge.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.ianchick.githubchallenge.utilities.HttpGetRequest;
-import com.example.ianchick.githubchallenge.utilities.JsonParser;
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.Repository;
 import com.example.ianchick.githubchallenge.User;
+import com.example.ianchick.githubchallenge.adapters.RepositoryListAdapter;
+import com.example.ianchick.githubchallenge.utilities.HttpGetRequest;
+import com.example.ianchick.githubchallenge.utilities.JsonParser;
+import com.example.ianchick.githubchallenge.utilities.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,17 +53,14 @@ public class MainActivity extends AppCompatActivity {
         username.setText(activeUser.getLogin());
         name.setText(activeUser.getName());
         reposUrl.setText(activeUser.getReposUrl());
+        Utils.hideKeyboard(this);
     }
 
     public void listRepos(View view) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = parseRepos(activeUser.getReposUrl());
-        ArrayList<String> repos = new ArrayList<>();
-        for (int i = 0; i < repositories.size(); i++ ) {
-            Repository repo = repositories.get(i);
-            repos.add(repo.getPullRequestUrl());
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_repository, repos);
-        listRepos.setAdapter(arrayAdapter);
+        RepositoryListAdapter repositoryListAdapter = new RepositoryListAdapter(repositories, this);
+        listRepos.setAdapter(repositoryListAdapter);
+        Utils.hideKeyboard(this);
     }
 
     /**

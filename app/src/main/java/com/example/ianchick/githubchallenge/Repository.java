@@ -7,18 +7,18 @@ package com.example.ianchick.githubchallenge;
 public class Repository {
 
     private String fullName;
-    private String pullRequestUrl;
+    private String url;
 
-    public Repository(String fullName, String pullRequestUrl) {
+    public Repository(String fullName, String url) {
         this.fullName = fullName;
-        this.pullRequestUrl = pullRequestUrl;
+        this.url = url;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public String getPullRequestUrl() {
-        return pullRequestUrl;
+    public String getUrl() {
+        return url;
     }
 }
