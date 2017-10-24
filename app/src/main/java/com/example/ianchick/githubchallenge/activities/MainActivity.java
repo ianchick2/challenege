@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     final private String BASE_URL = "https://api.github.com/";
 
-    private TextView username;
-    private TextView name;
-    private TextView reposUrl;
+    private TextView usernameTextView;
+    private TextView nameTextView;
+    private TextView reposUrlTextView;
     private EditText usernameInput;
     private ListView listRepos;
 
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         usernameInput = (EditText) findViewById(R.id.username_input);
-        username = (TextView) findViewById(R.id.show_username);
-        name = (TextView) findViewById(R.id.show_name);
-        reposUrl = (TextView) findViewById(R.id.show_repos_url);
+        usernameTextView = (TextView) findViewById(R.id.show_username);
+        nameTextView = (TextView) findViewById(R.id.show_name);
+        reposUrlTextView = (TextView) findViewById(R.id.show_repos_url);
 
         listRepos = (ListView) findViewById(R.id.list_repos);
 
@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void submitUsername(View view) throws ExecutionException, InterruptedException, JSONException {
         activeUser = parseUser(usernameInput.getText().toString());
-        username.setText(activeUser.getLogin());
-        name.setText(activeUser.getName());
-        reposUrl.setText(activeUser.getReposUrl());
+        usernameTextView.setText(activeUser.getLogin());
+        nameTextView.setText(activeUser.getName());
+        reposUrlTextView.setText(activeUser.getReposUrl());
         Utils.hideKeyboard(this);
     }
 

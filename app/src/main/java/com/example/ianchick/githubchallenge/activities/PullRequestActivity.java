@@ -2,6 +2,7 @@ package com.example.ianchick.githubchallenge.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
 import com.example.ianchick.githubchallenge.PullRequest;
 import com.example.ianchick.githubchallenge.R;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class PullRequestActivity extends AppCompatActivity {
+
+    private ListView listPullRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

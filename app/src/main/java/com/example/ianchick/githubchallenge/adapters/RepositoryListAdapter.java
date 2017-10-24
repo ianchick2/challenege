@@ -57,5 +57,6 @@ public class RepositoryListAdapter extends ArrayAdapter implements View.OnClickL
 
         Intent intent = new Intent(context, PullRequestActivity.class);
         intent.putExtra("PULL_REQUEST_URL", urlPullRequests);
+        context.startActivity(intent);
     }
 }
