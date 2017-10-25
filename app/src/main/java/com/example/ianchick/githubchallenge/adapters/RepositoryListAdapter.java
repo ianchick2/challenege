@@ -2,6 +2,7 @@ package com.example.ianchick.githubchallenge.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,16 @@ import static com.example.ianchick.githubchallenge.R.id.url;
 
 public class RepositoryListAdapter extends ArrayAdapter {
 
-    Context context;
+    private Context context;
 
     public RepositoryListAdapter(ArrayList<Repository> data, Context context) {
         super(context, R.layout.repository_list_row, data);
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View contentView, ViewGroup parent) {
+    public View getView(int position, View contentView, @NonNull ViewGroup parent) {
         View view = contentView;
 
         if (view == null) {

@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.example.ianchick.githubchallenge.PullRequest;
 import com.example.ianchick.githubchallenge.R;
+import com.example.ianchick.githubchallenge.adapters.PullRequestListAdapter;
 import com.example.ianchick.githubchallenge.utilities.HttpGetRequest;
 import com.example.ianchick.githubchallenge.utilities.JsonParser;
 
@@ -26,8 +27,13 @@ public class PullRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pull_request);
 
         String pullRequestUrl = getIntent().getStringExtra("PULL_REQUEST_URL");
+
+        listPullRequests = (ListView) findViewById(R.id.list_pulls);
+
         try {
-            parsePullRequest(pullRequestUrl);
+            ArrayList<PullRequest> pullRequests = parsePullRequest(pullRequestUrl);
+            PullRequestListAdapter pullRequestListAdapter = new PullRequestListAdapter(pullRequests, this);
+            listPullRequests.setAdapter(pullRequestListAdapter);
         } catch (ExecutionException | InterruptedException | JSONException e) {
             e.printStackTrace();
         }
