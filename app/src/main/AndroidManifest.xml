@@ -18,9 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activities.ListPullRequestsActivity" />
-
+        <activity
+            android:name=".activities.ListPullRequestsActivity"
+            android:parentActivityName="com.example.ianchick.githubchallenge.activities.MainActivity" />
         <activity android:name=".activities.ShowPullRequestActivity" />
     </application>
 

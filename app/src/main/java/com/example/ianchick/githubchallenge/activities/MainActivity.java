@@ -2,6 +2,7 @@ package com.example.ianchick.githubchallenge.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    final private String BASE_URL = "https://api.github.com/";
+    final private String BASE_URL = "https://username:ianchick2@api.github.com/";
 
     private TextView usernameTextView;
     private TextView nameTextView;
@@ -39,28 +40,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInput = (EditText) findViewById(R.id.username_input);
-        usernameTextView = (TextView) findViewById(R.id.show_username);
-        nameTextView = (TextView) findViewById(R.id.show_name);
-        reposUrlTextView = (TextView) findViewById(R.id.show_repos_url);
+        usernameInput = findViewById(R.id.username_input);
+        usernameTextView = findViewById(R.id.show_username);
+        nameTextView = findViewById(R.id.show_name);
+        reposUrlTextView = findViewById(R.id.show_repos_url);
 
-        listRepos = (ListView) findViewById(R.id.list_repos);
+        listRepos = findViewById(R.id.list_repos);
 
     }
 
     public void submitUsername(View view) throws ExecutionException, InterruptedException, JSONException {
+        clearViews();
         activeUser = parseUser(usernameInput.getText().toString());
-        usernameTextView.setText(activeUser.getLogin());
-        nameTextView.setText(activeUser.getName());
-        reposUrlTextView.setText(activeUser.getReposUrl());
-        Utils.hideKeyboard(this);
+        if (activeUser != null) {
+            usernameTextView.setText(activeUser.getLogin());
+            nameTextView.setText(activeUser.getName());
+            reposUrlTextView.setText(activeUser.getReposUrl());
+            Utils.hideKeyboard(this);
+        } else {
+            usernameTextView.setText("No user with that name was found.");
+        }
     }
 
     public void listRepos(View view) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = parseRepos(activeUser.getReposUrl());
-        RepositoryListAdapter repositoryListAdapter = new RepositoryListAdapter(repositories, this);
-        listRepos.setAdapter(repositoryListAdapter);
-        Utils.hideKeyboard(this);
+        if (!repositories.isEmpty()) {
+            RepositoryListAdapter repositoryListAdapter = new RepositoryListAdapter(repositories, this);
+            listRepos.setAdapter(repositoryListAdapter);
+            Utils.hideKeyboard(this);
+        } else {
+            usernameTextView.setText("No repositories found.");
+        }
     }
 
     /**
@@ -69,17 +79,32 @@ public class MainActivity extends AppCompatActivity {
 
     private User parseUser(String username) throws ExecutionException, InterruptedException, JSONException {
         String url = BASE_URL + "users/" + username;
-        JSONObject jsonObject = JsonParser.getJsonObject(HttpGetRequest.getRequest(url));
-        return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
+        String result = HttpGetRequest.getRequest(url);
+        if (!TextUtils.isDigitsOnly(result)) {
+            JSONObject jsonObject = JsonParser.getJsonObject(result);
+            return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
+        } else {
+            return null;
+        }
     }
 
     private ArrayList<Repository> parseRepos(String url) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = new ArrayList<>();
-        JSONArray jsonArray = JsonParser.getJsonArray(HttpGetRequest.getRequest(url));
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-            repositories.add(new Repository(jsonObject.getString("full_name"), jsonObject.getString("url")));
+        String result = HttpGetRequest.getRequest(url);
+        if (!TextUtils.isDigitsOnly(result)) {
+            JSONArray jsonArray = JsonParser.getJsonArray(result);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                repositories.add(new Repository(jsonObject.getString("full_name"), jsonObject.getString("url")));
+            }
         }
         return repositories;
+    }
+
+    private void clearViews() {
+        listRepos.setAdapter(null);
+        usernameTextView.setText("");
+        nameTextView.setText("");
+        reposUrlTextView.setText("");
     }
 }

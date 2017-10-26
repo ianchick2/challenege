@@ -1,6 +1,7 @@
 package com.example.ianchick.githubchallenge.utilities;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
         String stringUrl = strings[0];
         String result;
         String inputLine;
+        int responseCode;
 
         try {
             URL url = new URL(stringUrl);
@@ -33,19 +35,26 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
             connection.connect();
-            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
-            BufferedReader reader = new BufferedReader(streamReader);
-            StringBuilder stringBuilder = new StringBuilder();
+            responseCode = connection.getResponseCode();
+            Log.d("findme", "Response Code: " + responseCode);
 
-            while((inputLine = reader.readLine()) != null) {
-                stringBuilder.append(inputLine);
+            if (responseCode == 200) {
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((inputLine = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine);
+                }
+
+                reader.close();
+                streamReader.close();
+                result = stringBuilder.toString();
+            } else {
+                result = String.valueOf(responseCode);
             }
-
-            reader.close();
-            streamReader.close();
-
-            result = stringBuilder.toString();
             connection.disconnect();
 
         } catch (IOException e) {
