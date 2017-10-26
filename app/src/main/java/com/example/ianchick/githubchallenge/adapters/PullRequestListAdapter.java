@@ -52,7 +52,7 @@ public class PullRequestListAdapter extends ArrayAdapter {
             diffUrlTextView.setText(pullRequest.getDiffUrl());
             titleTextView.setText(pullRequest.getTitle());
 
-            String state = context.getString(R.string.status_label) + pullRequest.getState();
+            String state = context.getString(R.string.status_label) + " " + pullRequest.getState();
             state = state.toUpperCase();
             stateTextView.setText(state);
             stateTextView.setTextColor(Color.parseColor("#00d800"));

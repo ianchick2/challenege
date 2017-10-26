@@ -1,9 +1,6 @@
 package com.example.ianchick.githubchallenge.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,7 +19,7 @@ public class ShowPullRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_pull_request);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PullRequest pullRequest = (PullRequest) getIntent().getSerializableExtra("PULL_REQUEST_OBJ");
 
@@ -40,14 +37,7 @@ public class ShowPullRequestActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    TaskStackBuilder.create(this)
-                            .addNextIntentWithParentStack(upIntent)
-                            .startActivities();
-                } else {
-                    NavUtils.navigateUpTo(this, upIntent);
-                }
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 package com.example.ianchick.githubchallenge.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.Repository;
 import com.example.ianchick.githubchallenge.activities.ListPullRequestsActivity;
+import com.example.ianchick.githubchallenge.utilities.Utils;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,7 @@ public class RepositoryListAdapter extends ArrayAdapter {
                 Intent intent = new Intent(context, ListPullRequestsActivity.class);
                 intent.putExtra("LIST_PULL_REQUESTS_URL", urlPullRequests);
                 context.startActivity(intent);
+                Utils.hideKeyboard((Activity) context);
             }
         });
 

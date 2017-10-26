@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String BASE_URL = "api.github.com/";
+    private static final String BASE_URL = "https://api.github.com/";
 
     private TextView usernameTextView;
     private TextView nameTextView;
@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 clearViews();
+                if (newText.isEmpty()) {
+                    imageLogo.setVisibility(View.VISIBLE);
+                }
                 return true;
             }
         });
@@ -80,12 +83,10 @@ public class MainActivity extends AppCompatActivity {
         clearViews();
         activeUser = parseUser(username);
         if (activeUser != null) {
-            usernameTextView.setText(getString(R.string.user_label) + activeUser.getLogin());
-            nameTextView.setText(getString(R.string.name_label) + activeUser.getName());
-            reposUrlTextView.setText(getString(R.string.repos_label) + activeUser.getReposUrl());
+            usernameTextView.setText(String.format("%s%s%s", getString(R.string.user_label), " ", activeUser.getLogin()));
+            nameTextView.setText(String.format("%s%s%s", getString(R.string.name_label), " ", activeUser.getName()));
+            reposUrlTextView.setText(String.format("%s%s%s", getString(R.string.repos_label), " ", activeUser.getReposUrl()));
             Utils.hideKeyboard(this);
-        } else {
-            usernameTextView.setText(R.string.no_user_found_msg);
         }
     }
 
@@ -109,18 +110,21 @@ public class MainActivity extends AppCompatActivity {
     private User parseUser(String username) throws ExecutionException, InterruptedException, JSONException {
         String url = BASE_URL + "users/" + username;
         String result = HttpGetRequest.getRequest(url);
-        if (!TextUtils.isDigitsOnly(result)) {
+        if (result != null && !TextUtils.isDigitsOnly(result)) {
             JSONObject jsonObject = JsonParser.getJsonObject(result);
             return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
+        } else if(Integer.parseInt(result) == 403) {
+            usernameTextView.setText(R.string.four_oh_three_response);
         } else {
-            return null;
+            usernameTextView.setText(R.string.no_user_found_msg);
         }
+        return null;
     }
 
     private ArrayList<Repository> parseRepos(String url) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = new ArrayList<>();
         String result = HttpGetRequest.getRequest(url);
-        if (!TextUtils.isDigitsOnly(result)) {
+        if (result != null && !TextUtils.isDigitsOnly(result)) {
             JSONArray jsonArray = JsonParser.getJsonArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);

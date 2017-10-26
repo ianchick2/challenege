@@ -34,10 +34,15 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+            // Authentication
+            String token = "c2209faeeb9a8e41bebf8b8442b69d43aa20b4c1";
+            connection.setRequestProperty("token", token);
+
             connection.connect();
 
             responseCode = connection.getResponseCode();
-            Log.d("findme", "Response Code: " + responseCode);
+            Log.v("http", "Response Code: " + responseCode);
 
             if (responseCode == 200) {
                 InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());

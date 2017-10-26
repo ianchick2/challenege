@@ -3,7 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ianchick.githubchallenge.activities.ListPullRequestsActivity">
+    tools:context="com.example.ianchick.githubchallenge.activities.ListPullRequestsActivity"
+    android:orientation="vertical">
+
+    <fragment
+        android:name="com.example.ianchick.githubchallenge.fragments.EmptyViewFragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/empty_fragment" />
 
     <ListView
         android:id="@+id/list_pulls"
