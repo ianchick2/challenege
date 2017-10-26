@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.ianchick.githubchallenge.activities.MainActivity">
 
     <android.support.v7.widget.SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:defaultQueryHint="Search username..."
-        android:elevation="8dp"
         android:background="@color/colorPrimaryDark"
-        android:id="@+id/search_view" />
+        android:elevation="8dp"
+        app:defaultQueryHint="Search username..." />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,34 +21,34 @@
         android:padding="8dp">
 
         <ImageView
+            android:id="@+id/image_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/image_logo"
-            android:src="@drawable/dojocat"/>
+            android:src="@drawable/dojocat" />
 
         <TextView
             android:id="@+id/show_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/show_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/show_username"/>
+            android:layout_below="@id/show_username" />
 
         <TextView
             android:id="@+id/show_repos_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/show_name"
             android:onClick="listRepos"
             android:textColor="#0645AD"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_below="@id/show_name"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

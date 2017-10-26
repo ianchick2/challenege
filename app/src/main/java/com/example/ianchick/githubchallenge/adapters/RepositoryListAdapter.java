@@ -36,7 +36,8 @@ public class RepositoryListAdapter extends ArrayAdapter {
         View view = contentView;
 
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.repository_list_row, null);;
+            view = LayoutInflater.from(getContext()).inflate(R.layout.repository_list_row, null);
+            ;
         }
 
         Repository repository = (Repository) getItem(position);
