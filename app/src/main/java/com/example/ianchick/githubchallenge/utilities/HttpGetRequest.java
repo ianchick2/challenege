@@ -36,8 +36,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
             // Authentication
-            String token = "c2209faeeb9a8e41bebf8b8442b69d43aa20b4c1";
-            connection.setRequestProperty("token", token);
+//            connection.setRequestProperty("token", token);
 
             connection.connect();
 

@@ -17,5 +17,4 @@ public class JsonParser {
     public static JSONArray getJsonArray(String json) throws JSONException {
         return new JSONArray(json);
     }
-
 }

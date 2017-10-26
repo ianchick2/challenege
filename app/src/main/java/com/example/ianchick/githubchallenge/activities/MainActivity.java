@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(getString(R.string.android_interview_challenge));
 
-
         usernameTextView = findViewById(R.id.show_username);
         nameTextView = findViewById(R.id.show_name);
         reposUrlTextView = findViewById(R.id.show_repos_url);
