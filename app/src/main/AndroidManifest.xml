@@ -18,7 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.PullRequestActivity"></activity>
+
+        <activity android:name=".activities.ListPullRequestsActivity" />
+
+        <activity android:name=".activities.ShowPullRequestActivity" />
     </application>
 
 </manifest>

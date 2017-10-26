@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.Repository;
-import com.example.ianchick.githubchallenge.activities.PullRequestActivity;
+import com.example.ianchick.githubchallenge.activities.ListPullRequestsActivity;
 
 import java.util.ArrayList;
 
@@ -55,8 +55,8 @@ public class RepositoryListAdapter extends ArrayAdapter {
                 String url = urlTextView.getText().toString();
                 String urlPullRequests = url + "/pulls";
 
-                Intent intent = new Intent(context, PullRequestActivity.class);
-                intent.putExtra("PULL_REQUEST_URL", urlPullRequests);
+                Intent intent = new Intent(context, ListPullRequestsActivity.class);
+                intent.putExtra("LIST_PULL_REQUESTS_URL", urlPullRequests);
                 context.startActivity(intent);
             }
         });

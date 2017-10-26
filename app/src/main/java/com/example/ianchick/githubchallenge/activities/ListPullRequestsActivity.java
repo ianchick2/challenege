@@ -17,16 +17,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class PullRequestActivity extends AppCompatActivity {
+public class ListPullRequestsActivity extends AppCompatActivity {
 
     private ListView listPullRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pull_request);
+        setContentView(R.layout.activity_list_pull_requests);
 
-        String pullRequestUrl = getIntent().getStringExtra("PULL_REQUEST_URL");
+        setTitle("Pull Requests");
+
+        String pullRequestUrl = getIntent().getStringExtra("LIST_PULL_REQUESTS_URL");
 
         listPullRequests = (ListView) findViewById(R.id.list_pulls);
 
@@ -48,8 +50,8 @@ public class PullRequestActivity extends AppCompatActivity {
         JSONArray jsonArray = JsonParser.getJsonArray(HttpGetRequest.getRequest(pullRequestUrl));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-            pullRequests.add(new PullRequest(jsonObject.getInt("id"), jsonObject.getString("url"),
-                                            jsonObject.getString("state"), jsonObject.getString("diff_url")));
+            pullRequests.add(new PullRequest(jsonObject.getInt("number"), jsonObject.getString("url"),
+                                            jsonObject.getString("state"), jsonObject.getString("diff_url"), jsonObject.getString("title")));
         }
         return pullRequests;
     }
