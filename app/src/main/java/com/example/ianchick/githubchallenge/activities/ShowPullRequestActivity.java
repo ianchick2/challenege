@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ShowPullRequestActivity extends AppCompatActivity {
 
-    TextView diffTextView;
+    private TextView diffTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,6 @@ public class ShowPullRequestActivity extends AppCompatActivity {
      */
 
     private String parseDiff(String diffUrl) throws ExecutionException, InterruptedException {
-        return HttpGetRequest.getRequest(diffUrl);
+        return HttpGetRequest.getRequest(diffUrl, this);
     }
 }

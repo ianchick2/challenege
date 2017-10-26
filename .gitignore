@@ -8,3 +8,4 @@
 /captures
 .externalNativeBuild
 /app/src/main/java/com/example/ianchick/githubchallenge/secrets.json
+/app/src/main/assets/secrets.json

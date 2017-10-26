@@ -1,10 +1,15 @@
 package com.example.ianchick.githubchallenge.utilities;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
@@ -21,6 +26,12 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final int READ_TIMEOUT = 30000;
     private static final int CONNECTION_TIMEOUT = 30000;
 
+    private Context context;
+
+    public HttpGetRequest(Context context) {
+        this.context = context;
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         String stringUrl = strings[0];
@@ -36,10 +47,11 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
             // Authentication
-//            connection.setRequestProperty("token", token);
+            String token = readJsonFile("secrets.json").getString("token");
+            Log.v("http", "Token: " + token);
+            connection.setRequestProperty("token", token);
 
             connection.connect();
-
             responseCode = connection.getResponseCode();
             Log.v("http", "Response Code: " + responseCode);
 
@@ -61,7 +73,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             }
             connection.disconnect();
 
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             result = null;
         }
@@ -73,9 +85,23 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
         super.onPostExecute(result);
     }
 
-    public static String getRequest(String url) throws ExecutionException, InterruptedException {
-        HttpGetRequest getRequest = new HttpGetRequest();
-        String result = getRequest.execute(url).get();
-        return result;
+    public static String getRequest(String url, Context context) throws ExecutionException, InterruptedException {
+        return new HttpGetRequest(context).execute(url).get();
+    }
+
+    private JSONObject readJsonFile(String fileName) throws JSONException {
+        String json;
+        try {
+            InputStream is = context.getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return JsonParser.getJsonObject(json);
     }
 }

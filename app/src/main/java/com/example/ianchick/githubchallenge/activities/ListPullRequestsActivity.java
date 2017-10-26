@@ -64,7 +64,7 @@ public class ListPullRequestsActivity extends AppCompatActivity {
 
     private ArrayList<PullRequest> parsePullRequest(String pullRequestUrl) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<PullRequest> pullRequests = new ArrayList<>();
-        JSONArray jsonArray = JsonParser.getJsonArray(HttpGetRequest.getRequest(pullRequestUrl));
+        JSONArray jsonArray = JsonParser.getJsonArray(HttpGetRequest.getRequest(pullRequestUrl, this));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.get(i);
             pullRequests.add(new PullRequest(jsonObject.getInt("number"), jsonObject.getString("url"),

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setTitle(getString(R.string.android_interview_challenge));
 
         usernameTextView = findViewById(R.id.show_username);
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private User parseUser(String username) throws ExecutionException, InterruptedException, JSONException {
         String url = BASE_URL + "users/" + username;
-        String result = HttpGetRequest.getRequest(url);
+        String result = HttpGetRequest.getRequest(url, this);
         if (result != null && !TextUtils.isDigitsOnly(result)) {
             JSONObject jsonObject = JsonParser.getJsonObject(result);
             return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Repository> parseRepos(String url) throws ExecutionException, InterruptedException, JSONException {
         ArrayList<Repository> repositories = new ArrayList<>();
-        String result = HttpGetRequest.getRequest(url);
+        String result = HttpGetRequest.getRequest(url, this);
         if (result != null && !TextUtils.isDigitsOnly(result)) {
             JSONArray jsonArray = JsonParser.getJsonArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
