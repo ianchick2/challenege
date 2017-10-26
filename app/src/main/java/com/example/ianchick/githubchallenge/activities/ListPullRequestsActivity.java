@@ -26,11 +26,11 @@ public class ListPullRequestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pull_requests);
 
-        setTitle("Pull Requests");
+        setTitle(getString(R.string.pull_requests));
 
         String pullRequestUrl = getIntent().getStringExtra("LIST_PULL_REQUESTS_URL");
 
-        listPullRequests = (ListView) findViewById(R.id.list_pulls);
+        listPullRequests = findViewById(R.id.list_pulls);
 
         try {
             ArrayList<PullRequest> pullRequests = parsePullRequest(pullRequestUrl);

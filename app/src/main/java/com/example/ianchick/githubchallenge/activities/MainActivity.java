@@ -1,10 +1,13 @@
 package com.example.ianchick.githubchallenge.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,51 +28,77 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    final private String BASE_URL = "https://username:ianchick2@api.github.com/";
+    private static final String BASE_URL = "api.github.com/";
 
     private TextView usernameTextView;
     private TextView nameTextView;
     private TextView reposUrlTextView;
-    private EditText usernameInput;
     private ListView listRepos;
+    private ImageView imageLogo;
 
     private User activeUser;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle(getString(R.string.android_interview_challenge));
 
-        usernameInput = findViewById(R.id.username_input);
+
         usernameTextView = findViewById(R.id.show_username);
         nameTextView = findViewById(R.id.show_name);
         reposUrlTextView = findViewById(R.id.show_repos_url);
+        imageLogo = findViewById(R.id.image_logo);
+        imageLogo.setVisibility(View.VISIBLE);
 
         listRepos = findViewById(R.id.list_repos);
+        searchView = findViewById(R.id.search_view);
+        EditText searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(Color.parseColor("#ffffff"));
+        searchEditText.setHintTextColor(Color.parseColor("#A9CCE3"));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                try {
+                    submitUsername(query);
+                } catch (ExecutionException | InterruptedException | JSONException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                clearViews();
+                return true;
+            }
+        });
     }
 
-    public void submitUsername(View view) throws ExecutionException, InterruptedException, JSONException {
+    public void submitUsername(String username) throws ExecutionException, InterruptedException, JSONException {
         clearViews();
-        activeUser = parseUser(usernameInput.getText().toString());
+        activeUser = parseUser(username);
         if (activeUser != null) {
-            usernameTextView.setText(activeUser.getLogin());
-            nameTextView.setText(activeUser.getName());
-            reposUrlTextView.setText(activeUser.getReposUrl());
+            usernameTextView.setText(getString(R.string.user_label) + activeUser.getLogin());
+            nameTextView.setText(getString(R.string.name_label) + activeUser.getName());
+            reposUrlTextView.setText(getString(R.string.repos_label) + activeUser.getReposUrl());
             Utils.hideKeyboard(this);
         } else {
-            usernameTextView.setText("No user with that name was found.");
+            usernameTextView.setText(R.string.no_user_found_msg);
         }
     }
 
     public void listRepos(View view) throws ExecutionException, InterruptedException, JSONException {
+        imageLogo.setVisibility(View.GONE);
+        setTitle(activeUser.getLogin() + getString(R.string._repositories));
         ArrayList<Repository> repositories = parseRepos(activeUser.getReposUrl());
         if (!repositories.isEmpty()) {
             RepositoryListAdapter repositoryListAdapter = new RepositoryListAdapter(repositories, this);
             listRepos.setAdapter(repositoryListAdapter);
             Utils.hideKeyboard(this);
         } else {
-            usernameTextView.setText("No repositories found.");
+            usernameTextView.setText(R.string.no_repos_found_msg);
         }
     }
 
@@ -102,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearViews() {
+        setTitle(getString(R.string.android_interview_challenge));
         listRepos.setAdapter(null);
         usernameTextView.setText("");
         nameTextView.setText("");

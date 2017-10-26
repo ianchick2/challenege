@@ -27,7 +27,7 @@ public class ShowPullRequestActivity extends AppCompatActivity {
         PullRequest pullRequest = (PullRequest) getIntent().getSerializableExtra("PULL_REQUEST_OBJ");
 
         setTitle(pullRequest.getTitle());
-        diffTextView = (TextView) findViewById(R.id.diff);
+        diffTextView = findViewById(R.id.diff);
 
         try {
             diffTextView.setText(parseDiff(pullRequest.getDiffUrl()));

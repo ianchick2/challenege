@@ -2,4 +2,13 @@
     <string name="app_name">GithubChallenge</string>
     <string name="submit">Submit</string>
     <string name="username">Username</string>
+    <string name="user_label">User:</string>
+    <string name="name_label">Name:</string>
+    <string name="repos_label">Repos:</string>
+    <string name="no_user_found_msg">No user with that name was found.</string>
+    <string name="no_repos_found_msg">No repositories found.</string>
+    <string name="android_interview_challenge">Android Interview Challenge</string>
+    <string name="_repositories">\'s Repositories</string>
+    <string name="pull_requests">Pull Requests</string>
+    <string name="status_label">Status:</string>
 </resources>

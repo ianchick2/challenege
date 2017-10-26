@@ -2,6 +2,7 @@ package com.example.ianchick.githubchallenge.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,12 @@ public class PullRequestListAdapter extends ArrayAdapter {
             numberTextView.setText(String.valueOf(pullRequest.getNumber()));
             urlTextView.setText(pullRequest.getUrl());
             diffUrlTextView.setText(pullRequest.getDiffUrl());
-            stateTextView.setText(pullRequest.getState());
             titleTextView.setText(pullRequest.getTitle());
 
+            String state = context.getString(R.string.status_label) + pullRequest.getState();
+            state = state.toUpperCase();
+            stateTextView.setText(state);
+            stateTextView.setTextColor(Color.parseColor("#00d800"));
         }
 
         view.setOnClickListener(new View.OnClickListener() {
