@@ -12,4 +12,5 @@
     <string name="pull_requests">Pull Requests</string>
     <string name="status_label">Status:</string>
     <string name="four_oh_three_response">You probably hit the rate limit, loser!</string>
+    <string name="no_internet">You aren\'t connected to the internet!</string>
 </resources>

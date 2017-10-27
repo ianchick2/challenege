@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 public class PullRequest implements Serializable {
 
-    private int number;
-    private String url;
-    private String state;
-    private String diffUrl;
-    private String title;
+    private final int number;
+    private final String url;
+    private final String state;
+    private final String diffUrl;
+    private final String title;
 
     public PullRequest(int number, String url, String state, String diffUrl, String title) {
         this.number = number;

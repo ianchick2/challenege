@@ -28,7 +28,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private static final int READ_TIMEOUT = 30000;
     private static final int CONNECTION_TIMEOUT = 30000;
 
-    private Context context;
+    private final Context context;
 
     public static String getRequest(String url, Context context) throws ExecutionException, InterruptedException {
         return new HttpGetRequest(context).execute(url).get();

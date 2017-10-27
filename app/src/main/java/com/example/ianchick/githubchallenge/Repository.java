@@ -6,8 +6,8 @@ package com.example.ianchick.githubchallenge;
 
 public class Repository {
 
-    private String fullName;
-    private String url;
+    private final String fullName;
+    private final String url;
 
     public Repository(String fullName, String url) {
         this.fullName = fullName;

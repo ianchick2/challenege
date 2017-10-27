@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ianchick.githubchallenge.Diff;
 import com.example.ianchick.githubchallenge.R;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class DiffListAdapter extends ArrayAdapter {
 
-    private Context context;
+    private final Context context;
     private TextView diffBody;
 
     public DiffListAdapter(Context context, ArrayList<Diff> data) {
@@ -33,7 +34,7 @@ public class DiffListAdapter extends ArrayAdapter {
         View view = contentView;
 
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.diff_list_row, null);;
+            view = LayoutInflater.from(getContext()).inflate(R.layout.diff_list_row, null);
         }
 
         final Diff diff = (Diff) getItem(position);
@@ -46,6 +47,8 @@ public class DiffListAdapter extends ArrayAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO: Never got around to finishing :(
+                Toast.makeText(context, "Maybe one day I can finish this app...", Toast.LENGTH_LONG).show();
             }
         });
         return view;

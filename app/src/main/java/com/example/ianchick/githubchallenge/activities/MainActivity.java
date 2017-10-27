@@ -1,5 +1,6 @@
 package com.example.ianchick.githubchallenge.activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
     private User activeUser;
     private SearchView searchView;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_main);
 
         setTitle(getString(R.string.android_interview_challenge));
@@ -62,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (!Utils.isInternetConnected(context)) {
+                    usernameTextView.setText(R.string.no_internet);
+                    return false;
+                }
                 try {
                     submitUsername(query);
                 } catch (ExecutionException | InterruptedException | JSONException e) {
@@ -79,17 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    public void submitUsername(String username) throws ExecutionException, InterruptedException, JSONException {
-        clearViews();
-        activeUser = parseUser(username);
-        if (activeUser != null) {
-            usernameTextView.setText(String.format("%s%s%s", getString(R.string.user_label), " ", activeUser.getLogin()));
-            nameTextView.setText(String.format("%s%s%s", getString(R.string.name_label), " ", activeUser.getName()));
-            reposUrlTextView.setText(String.format("%s%s%s", getString(R.string.repos_label), " ", activeUser.getReposUrl()));
-            Utils.hideKeyboard(this);
-        }
     }
 
     public void listRepos(View view) throws ExecutionException, InterruptedException, JSONException {
@@ -113,6 +109,17 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Private
      */
+
+    private void submitUsername(String username) throws ExecutionException, InterruptedException, JSONException {
+        clearViews();
+        activeUser = parseUser(username);
+        if (activeUser != null) {
+            usernameTextView.setText(String.format("%s%s%s", getString(R.string.user_label), " ", activeUser.getLogin()));
+            nameTextView.setText(String.format("%s%s%s", getString(R.string.name_label), " ", activeUser.getName()));
+            reposUrlTextView.setText(String.format("%s%s%s", getString(R.string.repos_label), " ", activeUser.getReposUrl()));
+            Utils.hideKeyboard(this);
+        }
+    }
 
     private User parseUser(String username) throws ExecutionException, InterruptedException, JSONException {
         String url = BASE_URL + "users/" + username;

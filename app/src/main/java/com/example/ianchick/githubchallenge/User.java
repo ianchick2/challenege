@@ -6,9 +6,9 @@ package com.example.ianchick.githubchallenge;
 
 public class User {
 
-    private String login;
-    private String name;
-    private String reposUrl;
+    private final String login;
+    private final String name;
+    private final String reposUrl;
 
     public User(String login, String name, String reposUrl) {
         this.login = login;
