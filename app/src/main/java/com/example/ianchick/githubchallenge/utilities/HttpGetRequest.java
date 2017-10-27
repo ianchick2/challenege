@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.ianchick.githubchallenge.activities.ShowDiffActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,7 +50,6 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
             // Authentication
             String token = readJsonFile("secrets.json").getString("token");
-            Log.v("http", "Token: " + token);
             connection.setRequestProperty("token", token);
 
             connection.connect();
@@ -63,7 +64,12 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
                 StringBuilder stringBuilder = new StringBuilder();
 
                 while ((inputLine = reader.readLine()) != null) {
-                    stringBuilder.append(inputLine);
+                    // Need to format text for diffs instead of appending all the text
+                    if (context instanceof ShowDiffActivity) {
+                        stringBuilder.append(inputLine + "\n");
+                    } else {
+                        stringBuilder.append(inputLine);
+                    }
                 }
 
                 reader.close();

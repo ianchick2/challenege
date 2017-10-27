@@ -22,7 +22,7 @@
         <activity
             android:name=".activities.ListPullRequestsActivity"
             android:parentActivityName="com.example.ianchick.githubchallenge.activities.MainActivity" />
-        <activity android:name=".activities.ShowPullRequestActivity" />
+        <activity android:name=".activities.ShowDiffActivity" />
     </application>
 
 </manifest>

@@ -6,19 +6,17 @@ package com.example.ianchick.githubchallenge.utilities;
 
 public class DiffParser {
 
-    public DiffParser(String diff) {
-
+    // Gets rid of 'diff --git' string currently
+    public static String[] splitByClass(String diff) {
+        String[] splitDiffByClass = diff.split("diff --git ");
+        return splitDiffByClass;
     }
 
     /**
      * Private
      */
 
-    // Gets rid of 'diff --git' string currently
-    private String[] splitByClass(String diff) {
-        String[] splitDiffByClass = diff.split("diff --git");
-        return splitDiffByClass;
-    }
+
 
 
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.ianchick.githubchallenge.PullRequest;
 import com.example.ianchick.githubchallenge.R;
-import com.example.ianchick.githubchallenge.activities.ShowPullRequestActivity;
+import com.example.ianchick.githubchallenge.activities.ShowDiffActivity;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class PullRequestListAdapter extends ArrayAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ShowPullRequestActivity.class);
+                Intent intent = new Intent(context, ShowDiffActivity.class);
                 intent.putExtra("PULL_REQUEST_OBJ", pullRequest);
                 context.startActivity(intent);
             }
