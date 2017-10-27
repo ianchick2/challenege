@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ianchick.githubchallenge.PullRequest;
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.activities.ShowDiffActivity;
-import com.example.ianchick.githubchallenge.utilities.Utils;
 
 import java.util.ArrayList;
 
@@ -63,13 +61,9 @@ public class PullRequestListAdapter extends ArrayAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!Utils.isInternetConnected(context)) {
-                    Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
-                } else {
-                    Intent intent = new Intent(context, ShowDiffActivity.class);
-                    intent.putExtra("PULL_REQUEST_OBJ", pullRequest);
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, ShowDiffActivity.class);
+                intent.putExtra("PULL_REQUEST_OBJ", pullRequest);
+                context.startActivity(intent);
             }
         });
 

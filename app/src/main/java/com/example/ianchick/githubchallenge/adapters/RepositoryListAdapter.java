@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ianchick.githubchallenge.R;
 import com.example.ianchick.githubchallenge.Repository;
@@ -54,18 +53,14 @@ public class RepositoryListAdapter extends ArrayAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Utils.isInternetConnected(context)) {
-                    Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
-                } else {
-                    TextView urlTextView = view.findViewById(R.id.url);
-                    String url = urlTextView.getText().toString();
-                    String urlPullRequests = url + "/pulls";
+                TextView urlTextView = view.findViewById(R.id.url);
+                String url = urlTextView.getText().toString();
+                String urlPullRequests = url + "/pulls";
 
-                    Intent intent = new Intent(context, ListPullRequestsActivity.class);
-                    intent.putExtra("LIST_PULL_REQUESTS_URL", urlPullRequests);
-                    context.startActivity(intent);
-                    Utils.hideKeyboard((Activity) context);
-                }
+                Intent intent = new Intent(context, ListPullRequestsActivity.class);
+                intent.putExtra("LIST_PULL_REQUESTS_URL", urlPullRequests);
+                context.startActivity(intent);
+                Utils.hideKeyboard((Activity) context);
             }
         });
 
