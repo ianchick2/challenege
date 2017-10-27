@@ -129,10 +129,10 @@ public class MainActivity extends AppCompatActivity {
             return new User(jsonObject.getString("login"), jsonObject.getString("name"), jsonObject.getString("repos_url"));
         } else if(Integer.parseInt(result) == 403) {
             usernameTextView.setText(R.string.four_oh_three_response);
+            ninja(findViewById(R.id.image_logo));
         } else {
             usernameTextView.setText(R.string.no_user_found_msg);
-            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-            findViewById(R.id.image_logo).startAnimation(shake);
+            ninja(findViewById(R.id.image_logo));
         }
         return null;
     }
