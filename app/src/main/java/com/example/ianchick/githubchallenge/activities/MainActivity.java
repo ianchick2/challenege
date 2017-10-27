@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -103,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void ninja(View view) {
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        findViewById(R.id.image_logo).startAnimation(shake);
+    }
+
     /**
      * Private
      */
@@ -117,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             usernameTextView.setText(R.string.four_oh_three_response);
         } else {
             usernameTextView.setText(R.string.no_user_found_msg);
+            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+            findViewById(R.id.image_logo).startAnimation(shake);
         }
         return null;
     }

@@ -64,7 +64,6 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
                 StringBuilder stringBuilder = new StringBuilder();
 
                 while ((inputLine = reader.readLine()) != null) {
-                    // Need to format text for diffs instead of appending all the text
                     if (context instanceof ShowDiffActivity) {
                         stringBuilder.append(inputLine + "\n");
                     } else {

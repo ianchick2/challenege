@@ -24,7 +24,8 @@
             android:id="@+id/image_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/dojocat" />
+            android:src="@drawable/dojocat"
+            android:onClick="ninja"/>
 
         <TextView
             android:id="@+id/show_username"
